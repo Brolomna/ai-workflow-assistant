@@ -1,1 +1,10 @@
-__pycache__/\n*.py[cod]\n*.egg-info/\n.venv/\nvenv/\n.env\n.coverage\n.pytest_cache/\ndist/\nbuild/\n
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.env
+.coverage
+.pytest_cache/
+dist/
+build/
