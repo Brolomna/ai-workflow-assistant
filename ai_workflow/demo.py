@@ -43,13 +43,39 @@ def run_demo(task, text):
     if task == "classify":
         lowered = text.lower()
         urgency = "high" if any(word in lowered for word in ("urgent", "asap", "immediately", "critical")) else "low"
-        sentiment = "negative" if any(word in lowered for word in ("confusing", "problem", "issue", "failed", "bad")) else "positive" if any(word in lowered for word in ("great", "excellent", "success", "thanks")) else "neutral"
+        negative_words = ("confusing", "problem", "issue", "failed", "bad")
+        positive_words = ("great", "excellent", "success", "thanks")
+        negative_sentences = sum(
+            any(word in sentence.lower() for word in negative_words)
+            for sentence in sentences
+        )
+        positive_sentences = sum(
+            any(word in sentence.lower() for word in positive_words)
+            for sentence in sentences
+        )
+
+        if negative_sentences and positive_sentences:
+            sentiment = "mixed"
+        elif negative_sentences > positive_sentences and (
+            negative_sentences >= 2 or len(sentences) == 1
+        ):
+            sentiment = "negative"
+        elif positive_sentences > negative_sentences and (
+            positive_sentences >= 2 or len(sentences) == 1
+        ):
+            sentiment = "positive"
+        else:
+            sentiment = "neutral"
+
         category = "meeting notes" if any(word in lowered for word in ("team", "meeting", "demo", "project")) else "general"
         return {
             "category": category,
             "sentiment": sentiment,
             "urgency": urgency,
-            "rationale": "Heuristic classification based on simple keyword checks.",
+            "rationale": (
+                "Offline heuristic: sentiment is estimated from keyword-bearing "
+                "sentences; isolated sentiment in longer text is treated cautiously."
+            ),
         }
 
     raise ValueError("Unsupported task: " + task)
