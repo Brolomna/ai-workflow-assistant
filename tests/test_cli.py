@@ -49,7 +49,15 @@ class OfflineCliTests(unittest.TestCase):
         output = self.run_cli("classify")
         result = json.loads(output)
         self.assertEqual(result["category"], "meeting notes")
-        self.assertEqual(result["sentiment"], "negative")
+        self.assertEqual(result["sentiment"], "neutral")
+
+    def test_classify_mixed_sentiment(self):
+        from ai_workflow.demo import run_demo
+        result = run_demo(
+            "classify",
+            "The launch was excellent. The payment integration failed.",
+        )
+        self.assertEqual(result["sentiment"], "mixed")
 
     def test_output_file(self):
         destination = Path(self.temp_dir.name) / "result.json"
