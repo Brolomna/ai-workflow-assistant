@@ -7,7 +7,7 @@ from urllib.parse import urlparse
 
 from .tasks import run_task
 
-WEB_DIR = Path(__file__).resolve().parent.parent / "web"
+WEB_DIR = Path(__file__).resolve().parent / "web"
 MAX_BODY_BYTES = 1_000_000
 MIME_TYPES = {
     ".html": "text/html; charset=utf-8",
