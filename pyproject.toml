@@ -16,3 +16,6 @@ ai-workflow-web = "ai_workflow.web:main"
 
 [tool.setuptools.packages.find]
 include = ["ai_workflow*"]
+
+[tool.setuptools.package-data]
+ai_workflow = ["web/*"]
