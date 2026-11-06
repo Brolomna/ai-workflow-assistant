@@ -62,7 +62,7 @@ def _extract_action_items(sentences):
         r"^(?P<subject>.+?)\s+"
         r"(?P<modal>should|needs to|must|has to)\s+"
         r"(?P<action>review|update|fix|check|test|document|complete|send|create|"
-        r"remove|approve|rewrite|investigate)\b(?P<tail>.*?)[.!?]?$",
+        r"remove|approve|rewrite|investigate|include)\b(?P<tail>.*?)[.!?]?$",
         re.IGNORECASE,
     )
     past_to_base = {
