@@ -87,7 +87,7 @@ ai-workflow-web
 
 Open [http://127.0.0.1:8000](http://127.0.0.1:8000). Paste notes, choose a workflow, and view or copy the result. Stop the server with `Ctrl+C`.
 
-The web interface uses the same deterministic offline heuristics as `--demo`. It binds to localhost by default, accepts requests up to 1 MB, and does not send submitted text to an AI provider. It is intended as a local portfolio demo, not a public production deployment.
+The web interface uses the same deterministic offline heuristics as `--demo`. It binds to localhost by default, accepts requests up to 1 MB, uses no external services, and does not send submitted text to an AI provider. It is intended as a local portfolio demo, not a public production deployment.
 
 To choose another local port:
 
