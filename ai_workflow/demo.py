@@ -117,7 +117,7 @@ def _extract_action_items(sentences):
             ).strip()
             verb = past_to_base[match.group("verb").lower()]
             tail = match.group("tail").strip()
-            add(f"{verb} {subject}{tail}", None, match.group("modal"))
+            add(f"{verb} {subject[0].lower() + subject[1:]}{tail}", None, match.group("modal"))
             continue
 
         match = active_pattern.match(sentence)
