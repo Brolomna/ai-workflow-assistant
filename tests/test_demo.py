@@ -21,13 +21,13 @@ class DemoActionItemTests(unittest.TestCase):
         )
         self.assertEqual(len(result), 1)
         self.assertIsNone(result[0]["owner"])
-        self.assertEqual(result[0]["task"], "Review The signup flow")
+        self.assertEqual(result[0]["task"], "Review the signup flow")
 
     def test_extracts_unassigned_active_action(self):
         result = run_demo("action-items", "The release notes should include the new settings.")
         self.assertEqual(len(result), 1)
         self.assertIsNone(result[0]["owner"])
-        self.assertEqual(result[0]["task"], "Include The release notes")
+        self.assertEqual(result[0]["task"], "Include the new settings in the release notes")
 
     def test_does_not_treat_general_statement_as_action(self):
         result = run_demo("action-items", "The team agreed that the launch was successful.")
