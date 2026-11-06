@@ -125,7 +125,7 @@ def _extract_action_items(sentences):
             subject = match.group("subject").strip()
             action = match.group("action").strip()
             tail = match.group("tail").strip()
-            add(f"{action.capitalize()} {subject}{tail}", None, match.group("modal"))
+            if action.lower() == "include":\n                task = f"Include{tail} in {subject}"\n            else:\n                task = f"{action.capitalize()} {subject}{tail}"\n            add(task, None, match.group("modal"))
 
     return items
 
