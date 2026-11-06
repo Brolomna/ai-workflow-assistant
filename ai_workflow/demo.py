@@ -125,7 +125,7 @@ def _extract_action_items(sentences):
             subject = match.group("subject").strip()
             action = match.group("action").strip()
             tail = match.group("tail").strip()
-            if action.lower() == "include":\n                task = f"Include{tail} in {subject}"\n            else:\n                task = f"{action.capitalize()} {subject}{tail}"\n            add(task, None, match.group("modal"))
+            if action.lower() == "include":\n                task = f"Include{tail} in {subject[0].lower() + subject[1:]}"\n            else:\n                task = f"{action.capitalize()} {subject}{tail}"\n            add(task, None, match.group("modal"))
 
     return items
 
@@ -180,7 +180,7 @@ def run_demo(task, text):
         else:
             sentiment = "neutral"
 
-        if _contains_word(lowered, ("meeting", "standup", "sync", "agenda")):
+        if _contains_word(lowered, ("meeting", "standup", "sync", "agenda", "agreed", "minutes")):
             category = "meeting notes"
         elif _contains_word(lowered, ("bug", "error", "crash", "payment", "login", "integration")):
             category = "technical update"
