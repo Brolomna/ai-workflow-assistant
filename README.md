@@ -77,6 +77,24 @@ ai-workflow classify examples/meeting_notes.txt
 
 API usage may incur charges. ChatGPT subscriptions and API billing are separate. Check your provider's pricing and account balance before running live requests.
 
+## Browser demo
+
+Launch a polished local browser interface without an API key or external service:
+
+```bash
+ai-workflow-web
+```
+
+Open [http://127.0.0.1:8000](http://127.0.0.1:8000). Paste notes, choose a workflow, and view or copy the result. Stop the server with `Ctrl+C`.
+
+The web interface uses the same deterministic offline heuristics as `--demo`. It binds to localhost by default, accepts requests up to 1 MB, and does not send submitted text to an AI provider. It is intended as a local portfolio demo, not a public production deployment.
+
+To choose another local port:
+
+```bash
+ai-workflow-web --port 8080
+```
+
 ## Output to a file
 
 Use `--output` (or `-o`) to save results:
