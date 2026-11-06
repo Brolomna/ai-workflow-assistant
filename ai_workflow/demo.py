@@ -5,26 +5,26 @@ import re
 def _sentences(text):
     return [
         part.strip()
-        for part in re.split(r"(?<=[.!?])\\s+", text.strip())
+        for part in re.split(r"(?<=[.!?])\s+", text.strip())
         if part.strip()
     ]
 
 
 def _contains_word(text, words):
     return any(
-        re.search(r"\\b" + re.escape(word) + r"\\b", text, re.IGNORECASE)
+        re.search(r"\b" + re.escape(word) + r"\b", text, re.IGNORECASE)
         for word in words
     )
 
 
 def _deadline_from(action):
     match = re.search(
-        r"\\b(?:by|before|due|on)\\s+"
-        r"((?:next\\s+)?(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday|"
-        r"today|tomorrow|tonight|the\\s+demo|the\\s+launch|"
-        r"\\d{1,2}(?:st|nd|rd|th)?(?:\\s+of)?\\s+"
+        r"\b(?:by|before|due|on)\s+"
+        r"((?:next\s+)?(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday|"
+        r"today|tomorrow|tonight|the\s+demo|the\s+launch|"
+        r"\d{1,2}(?:st|nd|rd|th)?(?:\s+of)?\s+"
         r"(?:January|February|March|April|May|June|July|August|September|October|November|December)"
-        r"|\\d{4}-\\d{2}-\\d{2}))",
+        r"|\d{4}-\d{2}-\d{2}))",
         action,
         re.IGNORECASE,
     )
@@ -45,24 +45,24 @@ def _extract_action_items(sentences):
     items = []
     seen = set()
     named_pattern = re.compile(
-        r"^(?P<owner>[A-Z][\\w'-]*)\\s+"
-        r"(?P<modal>will|needs to|must|should|has to)\\s+"
+        r"^(?P<owner>[A-Z][\w'-]*)\s+"
+        r"(?P<modal>will|needs to|must|should|has to)\s+"
         r"(?P<action>.+?)[.!?]?$",
         re.IGNORECASE,
     )
     passive_pattern = re.compile(
-        r"^(?P<subject>.+?)\\s+"
-        r"(?P<modal>should|needs to|must|has to)\\s+"
-        r"be\\s+(?P<verb>reviewed|updated|fixed|checked|tested|documented|"
+        r"^(?P<subject>.+?)\s+"
+        r"(?P<modal>should|needs to|must|has to)\s+"
+        r"be\s+(?P<verb>reviewed|updated|fixed|checked|tested|documented|"
         r"completed|sent|created|removed|approved|rewritten|investigated)"
         r"(?P<tail>.*?)[.!?]?$",
         re.IGNORECASE,
     )
     active_pattern = re.compile(
-        r"^(?P<subject>.+?)\\s+"
-        r"(?P<modal>should|needs to|must|has to)\\s+"
+        r"^(?P<subject>.+?)\s+"
+        r"(?P<modal>should|needs to|must|has to)\s+"
         r"(?P<action>review|update|fix|check|test|document|complete|send|create|"
-        r"remove|approve|rewrite|investigate)\\b(?P<tail>.*?)[.!?]?$",
+        r"remove|approve|rewrite|investigate)\b(?P<tail>.*?)[.!?]?$",
         re.IGNORECASE,
     )
     past_to_base = {
@@ -101,7 +101,7 @@ def _extract_action_items(sentences):
             action = match.group("action")
             # Strip an obvious trailing conjunction fragment rather than
             # presenting it as part of the task.
-            action = re.sub(r"\\s+(?:and|but)\\s*$", "", action, flags=re.IGNORECASE)
+            action = re.sub(r"\s+(?:and|but)\s*$", "", action, flags=re.IGNORECASE)
             add(action, owner, modal)
             continue
 
@@ -110,7 +110,7 @@ def _extract_action_items(sentences):
             subject = match.group("subject")
             # Remove a preceding descriptive clause: "X is confusing and..."
             subject = re.sub(
-                r"\\s+(?:is|are|was|were)\\s+[^,;]+?\\s+and$",
+                r"\s+(?:is|are|was|were)\s+[^,;]+?\s+and$",
                 "",
                 subject,
                 flags=re.IGNORECASE,
@@ -138,8 +138,8 @@ def run_demo(task, text):
 
     if task == "summarize":
         points = sentences[:4]
-        return "## Demo summary\\n\\n" + " ".join(points) + (
-            "\\n\\n> Offline demo: this is a simple extractive preview, not an AI-generated summary."
+        return "## Demo summary\n\n" + " ".join(points) + (
+            "\n\n> Offline demo: this is a simple extractive preview, not an AI-generated summary."
         )
 
     if task == "action-items":
@@ -152,7 +152,7 @@ def run_demo(task, text):
         if _contains_word(lowered, urgency_high):
             urgency = "high"
         elif _contains_word(lowered, urgency_medium) or re.search(
-            r"\\b(?:due|by)\\s+(?:today|tomorrow)\\b", lowered
+            r"\b(?:due|by)\s+(?:today|tomorrow)\b", lowered
         ):
             urgency = "medium"
         else:
